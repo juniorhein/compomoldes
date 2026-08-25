@@ -3,6 +3,8 @@
   --orange-soft: #f9ae71;
   --graphite: #33343a;
   --graphite-deep: #202127;
+  --header-bg: #4a4c55;
+  --footer-bg: #3a3c45;
   --ink: #17181c;
   --muted: #687584;
   --line: #e2e8ec;
@@ -54,7 +56,7 @@ a {
   top: 0;
   z-index: 50;
   color: #fff;
-  background: var(--graphite);
+  background: var(--header-bg);
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14);
 }
 
@@ -1082,7 +1084,7 @@ h2 {
   gap: 28px;
   padding: 48px max(28px, calc((100vw - 1460px) / 2 + 28px));
   color: #fff;
-  background: var(--graphite-deep);
+  background: var(--footer-bg);
 }
 
 .footer address {
