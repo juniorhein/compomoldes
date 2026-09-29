@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
+  Box,
   CheckCircle2,
   ChevronDown,
   ClipboardList,
@@ -23,6 +24,14 @@ import {
   Wrench,
   X,
 } from "lucide-react";
+import cadLibrary from "./cadLibrary.json";
+
+const catalogPdf = "/downloads/catalogo-compomoldes-2023.pdf";
+const drawingImage = (key) => `/desenhos/${key}.jpg`;
+const drawingPdf = (key) => `/desenhos/${key}.pdf`;
+const cadByKey = Object.fromEntries(cadLibrary.flatMap((family) => family.items.map((item) => [item.key, item])));
+const formatSize = (bytes) =>
+  bytes >= 1048576 ? `${(bytes / 1048576).toFixed(1).replace(".", ",")} MB` : `${Math.max(1, Math.round(bytes / 1024))} KB`;
 const logo = "/assets/03_Logo_Oficial_Compomoldes_Horizontal_Branco_Registrado.png";
 const facadeSede = "/assets/fachada-sede.jpg";
 
@@ -32,6 +41,7 @@ const productLines = [
   "Buchas e Colunas",
   "Centralizadores",
   "Componentes",
+  "Contadores de Ciclo",
   "Controladores",
   "Datadores",
   "Molas",
@@ -49,6 +59,8 @@ const products = [
     image: "/assets/01_2c2496_326a4476671945eeaf9b3044ea6ca58c_mv2.png",
     summary: "Evita que peças fiquem engatadas em componentes e mecanismos como os próprios extratores.",
     specs: ["Aplicação: extração em moldes de injeção", "Função: aceleração de curso", "Indicação: liberação do produto moldado"],
+    drawing: "acelerador-ep",
+    cad: ["eep"],
   },
   {
     name: "Bucha do Conjunto Extrator",
@@ -83,14 +95,8 @@ const products = [
     line: "Pinos Extratores",
     image: "/assets/08_2c2496_2ccf082944674cbc82f088ec0240ad6d_mv2.png",
     summary: "Lâmina nitretada para extração com acabamento técnico e resistência superficial.",
-    specs: ["DIN 1530 / ISO 8693", "Material: aço para trabalho a quente", "Dureza superficial: 950 HV 0,3"],
-  },
-  {
-    name: "Molas de Compressão",
-    line: "Molas",
-    image: "/assets/14_2c2496_c30212e465f34e3b9f8fc11041ab5d67_mv2.png",
-    summary: "Molas para cargas industriais, produzidas conforme especificações técnicas do mercado.",
-    specs: ["Norma: ISO 10243", "Linhas por carga: amarela, azul, verde e vermelha", "Aplicação: retorno e compressão"],
+    specs: ["DIN 1530 / ISO 8693", "Nitretada", "Material: aço para trabalho a quente", "Dureza superficial: 950 HV 0,3"],
+    drawing: "lamina-extratora",
   },
   {
     name: "Resistência Tubular Flexível",
@@ -105,6 +111,7 @@ const products = [
     image: "/assets/17_2c2496_ca79c0b78944489f8b1ebd0be986c1b8_mv2.png",
     summary: "Componente para facilitar a construção e operação de gavetas em moldes de injeção.",
     specs: ["Aplicação: gavetas de molde", "Função: retenção e posicionamento", "Linha técnica para injeção plástica"],
+    cad: ["rrc"],
   },
   {
     name: "Trava de Gaveta Z5130",
@@ -112,6 +119,7 @@ const products = [
     image: "/assets/12_2c2496_b05f8f6f6b16456da29fbe8b0b70145a_mv2.png",
     summary: "Trava de gaveta para segurança e precisão em sistemas de molde.",
     specs: ["Aplicação: travamento de gaveta", "Construção robusta", "Indicação: moldes de injeção"],
+    cad: ["zz5130"],
   },
   {
     name: "Válvula de Ar APV",
@@ -126,6 +134,109 @@ const products = [
     image: "/assets/06_2c2496_6b5f7be4282a40fc8ba0347ec6efc366_mv2.png",
     summary: "Conjunto montado e ajustado para instalação e reposição imediata.",
     specs: ["Inclinação livre da haste até 30 graus", "Auto lubrificante", "Instalação imediata"],
+    cad: ["kkocum", "kkocuf"],
+  },
+  {
+    name: "Pino Extrator Tipo A",
+    line: "Pinos Extratores",
+    image: "/assets/produtos/pino-extrator-tipo-a.png",
+    summary: "Pino extrator cilíndrico nitretado, com cabeça e diâmetro retificados para extração precisa.",
+    specs: ["DIN 1530 / ISO 6751", "Nitretado", "Tolerância do diâmetro d1: g6"],
+    drawing: "pino-extrator-tipo-a",
+  },
+  {
+    name: "Pino Extrator Tipo C",
+    line: "Pinos Extratores",
+    image: "/assets/produtos/pino-extrator-tipo-c.png",
+    summary: "Pino extrator escalonado nitretado, indicado para extração em pontos de diâmetro reduzido.",
+    specs: ["DIN 1530 / ISO 8694", "Nitretado", "Corpo escalonado com tolerância g6"],
+    drawing: "pino-extrator-tipo-c",
+  },
+  {
+    name: "Bucha Extratora",
+    line: "Pinos Extratores",
+    image: "/assets/produtos/bucha-extratora.png",
+    summary: "Bucha extratora nitretada para extração de peças em torno de pinos e machos.",
+    specs: ["DIN 16756 / ISO 8405", "Nitretada", "Furo interno com tolerância h6"],
+    drawing: "bucha-extratora",
+  },
+  {
+    name: "Acelerador de Extração AE",
+    line: "Aceleradores de Extração",
+    image: "/assets/produtos/acelerador-ae.png",
+    summary: "Acelerador cilíndrico para extração em dois estágios, montado em alojamento no molde.",
+    specs: ["Construção cilíndrica com bucha em bronze", "Montagem em alojamento", "Aplicação: extração sequencial"],
+    drawing: "acelerador-ae",
+    cad: ["aae"],
+  },
+  {
+    name: "Acelerador de Extração Z141",
+    code: "CAE0Z141",
+    line: "Aceleradores de Extração",
+    image: "/assets/produtos/acelerador-z141.png",
+    summary: "Acelerador compacto para ampliar o curso de extração em moldes com pouco espaço.",
+    specs: ["Códigos: CAE0Z1413, CAE0Z1416, CAE0Z1418", "Montagem em alojamento na placa", "Aplicação: extração acelerada"],
+    drawing: "acelerador-z141",
+    cad: ["zz141"],
+  },
+  {
+    name: "Centralizador Cilíndrico",
+    line: "Centralizadores",
+    image: "/assets/produtos/centralizador-cilindrico.png",
+    summary: "Conjunto macho e fêmea cilíndrico para alinhamento preciso entre as placas do molde.",
+    specs: ["Conjunto macho + fêmea", "Fixação por parafuso", "Aplicação: alinhamento de placas"],
+    drawing: "centralizador-cilindrico",
+    cad: ["zz051", "pl", "ky"],
+  },
+  {
+    name: "Contador de Ciclos CVPL",
+    code: "CCCVPL",
+    line: "Contadores de Ciclo",
+    image: "/assets/produtos/contador-cvpl.png",
+    summary: "Contador mecânico de ciclos em corpo quadrado, para registrar a produção do molde.",
+    specs: ["Código: CCCVPL", "Visor de 7 dígitos", "Fixação por parafuso M4x25"],
+    drawing: "contador-cvpl",
+  },
+  {
+    name: "Contador de Ciclos CVR",
+    code: "CCCVR",
+    line: "Contadores de Ciclo",
+    image: "/assets/produtos/contador-cvr.png",
+    summary: "Contador mecânico de ciclos em corpo cilíndrico, para montagem embutida no molde.",
+    specs: ["Código: CCCVR", "Visor de 7 dígitos", "Corpo cilíndrico Ø22 mm"],
+    drawing: "contador-cvr",
+  },
+  {
+    name: "Mola Verde — Carga Leve",
+    line: "Molas",
+    image: "/assets/produtos/mola-verde.png",
+    summary: "Mola de compressão para matrizes e moldes, linha de carga leve.",
+    specs: ["Norma: ISO 10243", "Carga leve (verde)", "Aplicação: retorno e compressão"],
+    drawing: "mola-verde",
+  },
+  {
+    name: "Mola Azul — Carga Média",
+    line: "Molas",
+    image: "/assets/produtos/mola-azul.png",
+    summary: "Mola de compressão para matrizes e moldes, linha de carga média.",
+    specs: ["Norma: ISO 10243", "Carga média (azul)", "Aplicação: retorno e compressão"],
+    drawing: "mola-azul",
+  },
+  {
+    name: "Mola Vermelha — Carga Pesada",
+    line: "Molas",
+    image: "/assets/produtos/mola-vermelha.png",
+    summary: "Mola de compressão para matrizes e moldes, linha de carga pesada.",
+    specs: ["Norma: ISO 10243", "Carga pesada (vermelha)", "Aplicação: retorno e compressão"],
+    drawing: "mola-vermelha",
+  },
+  {
+    name: "Mola Amarela — Carga Extra Pesada",
+    line: "Molas",
+    image: "/assets/produtos/mola-amarela.png",
+    summary: "Mola de compressão para matrizes e moldes, linha de carga extra pesada.",
+    specs: ["Norma: ISO 10243", "Carga extra pesada (amarela)", "Aplicação: retorno e compressão"],
+    drawing: "mola-amarela",
   },
 ];
 
@@ -158,8 +269,9 @@ const lineApplications = {
 };
 
 const productDetails = (product) => ({
-  code: product.name
+  code: product.code || product.name
     .split(" ")
+    .filter((part) => /^[a-z0-9]/i.test(part))
     .map((part) => part[0])
     .join("")
     .slice(0, 4)
@@ -175,7 +287,8 @@ const productDetails = (product) => ({
     ["Linha", product.line],
     ["Código base", product.name],
     ["Disponibilidade", product.line === "Controladores" ? "Projeto sob medida" : "Sob consulta"],
-    ["Documentação", "Ficha técnica e desenho mediante solicitação"],
+    ["Documentação", product.drawing ? "Desenho técnico em PDF para download" : "Ficha técnica e desenho mediante solicitação"],
+    ...(product.cad ? [["Modelo 3D", "Arquivos CAD (IGES) para download"]] : []),
   ],
 });
 
@@ -326,6 +439,83 @@ function AboutPage() {
   );
 }
 
+function DownloadsPage() {
+  const drawings = products.filter((product) => product.drawing);
+  return (
+    <>
+      <section className="page-hero downloads-hero">
+        <div>
+          <nav className="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Início</a>
+            <span>/</span>
+            <strong>Downloads</strong>
+          </nav>
+          <span className="eyebrow">Área técnica</span>
+          <h1>Catálogo, desenhos e modelos 3D.</h1>
+          <p>
+            Baixe o catálogo completo, os desenhos técnicos em PDF e os modelos CAD para usar direto no projeto do molde.
+          </p>
+          <div className="hero-actions">
+            <a className="primary-cta" href={catalogPdf} target="_blank" rel="noreferrer">
+              <Download size={19} /> Baixar catálogo (PDF)
+            </a>
+            <a className="secondary-cta" href="#modelos-3d">Ver modelos 3D</a>
+          </div>
+        </div>
+      </section>
+
+      <section className="section downloads-section" id="desenhos">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow">Desenhos técnicos</span>
+            <h2>Cotas de referência por produto.</h2>
+          </div>
+        </div>
+        <div className="drawing-grid">
+          {drawings.map((product) => (
+            <article className="drawing-card" key={product.name}>
+              <a href={productPath(product)} className="drawing-thumb">
+                <img src={drawingImage(product.drawing)} alt={`Desenho técnico — ${product.name}`} loading="lazy" />
+              </a>
+              <span className="product-line">{product.line}</span>
+              <strong>{product.name}</strong>
+              <a className="text-link" href={drawingPdf(product.drawing)} download>
+                <Download size={16} /> Baixar PDF
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section downloads-section" id="modelos-3d">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow">Modelos 3D</span>
+            <h2>Arquivos CAD por família.</h2>
+          </div>
+        </div>
+        <p className="downloads-note">Arquivos em IGES (formato neutro, abre em qualquer CAD) e, quando disponível, PRT nativo.</p>
+        <div className="cad-families">
+          {cadLibrary.map((family) => (
+            <article className="cad-family" key={family.family}>
+              <strong>{family.family}</strong>
+              <div className="download-list">
+                {family.items.map((item) => (
+                  <a href={item.file} download key={item.key}>
+                    <Box size={20} />
+                    <span><strong>{item.label}</strong>{item.count} arquivos · {item.formats} · {formatSize(item.size)}</span>
+                    <Download size={18} />
+                  </a>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
 function ContactPage() {
   return (
     <>
@@ -395,6 +585,10 @@ function ContactPage() {
 
 function ProductPage({ product }) {
   const details = productDetails(product);
+  const views = [product.image, ...(product.drawing ? [drawingImage(product.drawing)] : [])];
+  const [view, setView] = useState(0);
+  const cadItems = (product.cad || []).map((key) => cadByKey[key]).filter(Boolean);
+  const hasDownloads = Boolean(product.drawing) || cadItems.length > 0;
   const related = products
     .filter((item) => item.line === product.line && item.name !== product.name)
     .concat(products.filter((item) => item.line !== product.line))
@@ -423,8 +617,25 @@ function ProductPage({ product }) {
           </nav>
 
           <div className="product-hero-panel">
-            <div className="product-gallery">
-              <img src={product.image} alt={product.name} />
+            <div className="product-gallery-wrap">
+              <div className={view > 0 ? "product-gallery is-drawing" : "product-gallery"}>
+                <img src={views[view]} alt={view > 0 ? `Desenho técnico — ${product.name}` : product.name} />
+              </div>
+              {views.length > 1 && (
+                <div className="gallery-thumbs" aria-label="Imagens do produto">
+                  {views.map((src, index) => (
+                    <button
+                      type="button"
+                      key={src}
+                      className={index === view ? "active" : ""}
+                      onClick={() => setView(index)}
+                      aria-label={index > 0 ? "Ver desenho técnico" : "Ver produto"}
+                    >
+                      <img src={src} alt="" />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="product-intro">
               <span className="eyebrow">{product.line}</span>
@@ -446,10 +657,23 @@ function ProductPage({ product }) {
               </dl>
               <div className="detail-actions">
                 <a href="#orcamento" className="primary-cta">Solicitar orçamento</a>
-                <button type="button" className="download-button">
-                  <Download size={18} />
-                  Baixar ficha técnica
-                </button>
+                {product.drawing ? (
+                  <a className="download-button" href={drawingPdf(product.drawing)} download>
+                    <Download size={18} />
+                    Desenho técnico (PDF)
+                  </a>
+                ) : (
+                  <a className="download-button" href={catalogPdf} target="_blank" rel="noreferrer">
+                    <Download size={18} />
+                    Catálogo (PDF)
+                  </a>
+                )}
+                {cadItems.length > 0 && (
+                  <a className="download-button" href="#downloads-produto">
+                    <Box size={18} />
+                    Modelo 3D
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -459,6 +683,7 @@ function ProductPage({ product }) {
             <a href="#caracteristicas">Características</a>
             <a href="#aplicacoes-produto">Aplicações</a>
             <a href="#tabela-tecnica">Tabela técnica</a>
+            {hasDownloads && <a href="#downloads-produto">Downloads</a>}
             <a href="#orcamento">Orçamento</a>
           </nav>
 
@@ -503,6 +728,41 @@ function ProductPage({ product }) {
               </tbody>
             </table>
           </section>
+
+          {hasDownloads && (
+            <section className="product-downloads" id="downloads-produto">
+              <div>
+                <span className="section-kicker"><Download size={18} /> Downloads</span>
+                <h2>Desenho técnico e modelos 3D</h2>
+              </div>
+              {product.drawing && (
+                <a className="drawing-preview" href={drawingPdf(product.drawing)} target="_blank" rel="noreferrer">
+                  <img src={drawingImage(product.drawing)} alt={`Desenho técnico — ${product.name}`} loading="lazy" />
+                </a>
+              )}
+              <div className="download-list">
+                {product.drawing && (
+                  <a href={drawingPdf(product.drawing)} download>
+                    <FileText size={20} />
+                    <span><strong>Desenho técnico</strong>PDF com cotas de referência</span>
+                    <Download size={18} />
+                  </a>
+                )}
+                {cadItems.map((item) => (
+                  <a href={item.file} download key={item.key}>
+                    <Box size={20} />
+                    <span><strong>Modelo 3D — {item.label}</strong>{item.count} arquivos · {item.formats} · {formatSize(item.size)}</span>
+                    <Download size={18} />
+                  </a>
+                ))}
+                <a href={catalogPdf} target="_blank" rel="noreferrer">
+                  <ClipboardList size={20} />
+                  <span><strong>Catálogo Compomoldes</strong>Tabelas de referência de todas as linhas</span>
+                  <Download size={18} />
+                </a>
+              </div>
+            </section>
+          )}
 
           <section className="quote-box" id="orcamento">
             <div>
@@ -576,7 +836,8 @@ function App() {
   const activeProduct = getProductByPath(path);
   const isAboutPage = path === "/quem-somos";
   const isContactPage = path === "/contato";
-  const isInnerPage = activeProduct || isAboutPage || isContactPage;
+  const isDownloadsPage = path === "/downloads";
+  const isInnerPage = activeProduct || isAboutPage || isContactPage || isDownloadsPage;
 
   const filtered = useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -625,9 +886,9 @@ function App() {
               <Phone size={26} />
               <span>Televendas/WhatsApp<strong>(41) 3085-4649</strong></span>
             </a>
-            <button type="button" className="icon-button" title="Catálogo">
+            <a className="icon-button" href={catalogPdf} target="_blank" rel="noreferrer" title="Catálogo (PDF)">
               <ClipboardList size={25} />
-            </button>
+            </a>
             <button type="button" className="login-button">
               <User size={28} />
               <span>Área técnica<strong>Entrar</strong></span>
@@ -643,7 +904,7 @@ function App() {
           <a href="/quem-somos">Quem somos</a>
           <a href="/#aplicacoes">Indústrias</a>
           <a href="/#consultor">Consultoria Técnica</a>
-          <a href="/#produtos">Downloads</a>
+          <a href="/downloads">Downloads</a>
           <a href="/contato">Contato</a>
         </nav>
 
@@ -665,6 +926,8 @@ function App() {
         <AboutPage />
       ) : isContactPage ? (
         <ContactPage />
+      ) : isDownloadsPage ? (
+        <DownloadsPage />
       ) : (
         <>
       <div className="hero-outer">

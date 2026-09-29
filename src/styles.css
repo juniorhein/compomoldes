@@ -1291,3 +1291,247 @@ h2 {
     padding-inline: 16px;
   }
 }
+
+/* ---------- galeria com desenho técnico ---------- */
+.product-gallery-wrap {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.product-gallery.is-drawing {
+  background: #fff;
+}
+
+.product-gallery.is-drawing img {
+  max-width: 94%;
+  max-height: 390px;
+}
+
+.gallery-thumbs {
+  display: flex;
+  gap: 10px;
+}
+
+.gallery-thumbs button {
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 70px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid var(--line);
+  cursor: pointer;
+}
+
+.gallery-thumbs button.active {
+  border-color: var(--orange);
+  box-shadow: inset 0 0 0 1px var(--orange);
+}
+
+.gallery-thumbs img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+a.download-button {
+  text-decoration: none;
+}
+
+.icon-button {
+  text-decoration: none;
+}
+
+/* ---------- downloads (produto e página /downloads) ---------- */
+.product-downloads {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+  gap: 22px 28px;
+  margin-top: 18px;
+  padding: 34px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.product-downloads > div:first-child {
+  grid-column: 1 / -1;
+}
+
+.product-downloads h2 {
+  margin: 0;
+  font-size: var(--subtitle);
+}
+
+.drawing-preview {
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  transition: border-color 0.2s ease;
+}
+
+.drawing-preview:hover {
+  border-color: var(--orange);
+}
+
+.drawing-preview img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+}
+
+.download-list {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.download-list a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.download-list a:hover {
+  background: #fff;
+  border-color: var(--orange);
+}
+
+.download-list a > svg:first-child {
+  color: var(--orange);
+}
+
+.download-list a > svg:last-child {
+  color: var(--muted);
+}
+
+.download-list span {
+  display: grid;
+  gap: 3px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.download-list span strong {
+  color: var(--ink);
+  font-size: 0.98rem;
+  font-weight: 650;
+}
+
+.downloads-hero {
+  grid-template-columns: minmax(0, 1fr);
+  padding-bottom: 40px;
+}
+
+.downloads-hero .primary-cta {
+  gap: 10px;
+}
+
+.downloads-section {
+  padding-top: 24px;
+}
+
+.downloads-note {
+  margin: -8px 0 22px;
+  color: var(--muted);
+}
+
+.drawing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.drawing-card {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.drawing-card strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.drawing-card .text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.drawing-thumb {
+  display: grid;
+  place-items: center;
+  height: 170px;
+  margin-bottom: 6px;
+  background: #fff;
+  border-bottom: 1px solid #eef2f4;
+}
+
+.drawing-thumb img {
+  max-width: 100%;
+  max-height: 160px;
+  object-fit: contain;
+}
+
+.cad-families {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.cad-family {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  padding: 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.cad-family > strong {
+  color: var(--graphite);
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 1120px) {
+  .drawing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cad-families {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .product-downloads {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 22px;
+  }
+
+  .drawing-grid,
+  .cad-families {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* fotos com fundo branco se fundem ao fundo claro da galeria/cards */
+.product-gallery img,
+.product-image img {
+  mix-blend-mode: multiply;
+}
