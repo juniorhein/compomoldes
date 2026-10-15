@@ -393,8 +393,8 @@ h2 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 1 1 0;
-  min-width: 0;
+  flex: 1 0 auto;
+  min-width: max-content;
   min-height: 40px;
   padding: 0 10px;
   color: var(--graphite);
