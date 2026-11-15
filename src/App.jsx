@@ -25,6 +25,7 @@ import {
   X,
 } from "lucide-react";
 import cadLibrary from "./cadLibrary.json";
+import { trackContactConversion, trackContactLinkClick } from "./contactConversion.js";
 
 const catalogPdf = "/downloads/catalogo-compomoldes-2023.pdf";
 const drawingImage = (key) => `/desenhos/${key}.jpg`;
@@ -517,6 +518,29 @@ function DownloadsPage() {
 }
 
 function ContactPage() {
+  const [confirmation, setConfirmation] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    for (const field of form.querySelectorAll("[required]")) {
+      field.setCustomValidity(field.value.trim() ? "" : "Preencha este campo.");
+    }
+    if (!form.reportValidity()) return;
+
+    const fields = new FormData(form);
+    const name = fields.get("name").trim();
+    const company = fields.get("company").trim();
+    const email = fields.get("email").trim();
+    const message = fields.get("message").trim();
+    const subject = `Solicitação de contato — ${name}`;
+    const body = `Nome: ${name}\nEmpresa: ${company}\nE-mail: ${email}\n\nMensagem:\n${message}`;
+
+    trackContactConversion();
+    window.location.href = `mailto:vendas@compomoldes.com.br?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setConfirmation("Solicitação preparada. Conclua o envio no seu aplicativo de e-mail.");
+  };
+
   return (
     <>
       <section className="page-hero contact-hero">
@@ -537,26 +561,30 @@ function ContactPage() {
             <a className="secondary-cta" href="mailto:vendas@compomoldes.com.br">Enviar e-mail</a>
           </div>
         </div>
-        <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+        <form className="contact-form" onSubmit={handleSubmit} onInput={(event) => {
+          event.target.setCustomValidity?.("");
+          setConfirmation("");
+        }}>
           <label>
             Nome
-            <input type="text" placeholder="Seu nome" />
+            <input name="name" type="text" placeholder="Seu nome" required />
           </label>
           <label>
             Empresa
-            <input type="text" placeholder="Nome da empresa" />
+            <input name="company" type="text" placeholder="Nome da empresa" />
           </label>
           <label>
             E-mail
-            <input type="email" placeholder="seuemail@empresa.com.br" />
+            <input name="email" type="email" placeholder="seuemail@empresa.com.br" required />
           </label>
           <label>
             Mensagem
-            <textarea rows="4" placeholder="Descreva o produto, medida ou aplicação que precisa consultar." />
+            <textarea name="message" rows="4" placeholder="Descreva o produto, medida ou aplicação que precisa consultar." required />
           </label>
           <button className="primary-cta" type="submit">
             Enviar solicitação <Send size={18} />
           </button>
+          {confirmation && <p role="status">{confirmation}</p>}
         </form>
       </section>
 
@@ -804,9 +832,21 @@ function ProductPage({ product }) {
 
 function App() {
   const [query, setQuery] = useState("");
-  const [activeLine, setActiveLine] = useState("Todos");
+  const [activeLine, setActiveLine] = useState(() => {
+    const line = new URLSearchParams(window.location.search).get("linha");
+    return productLines.find((name) => slugify(name) === line) || "Todos";
+  });
   const [menuOpen, setMenuOpen] = useState(false);
   const [path, setPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    document.addEventListener("click", trackContactLinkClick, true);
+    document.addEventListener("auxclick", trackContactLinkClick, true);
+    return () => {
+      document.removeEventListener("click", trackContactLinkClick, true);
+      document.removeEventListener("auxclick", trackContactLinkClick, true);
+    };
+  }, []);
 
   useEffect(() => {
     const syncPath = () => setPath(window.location.pathname);

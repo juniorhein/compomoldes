@@ -1,7 +1,462 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
+  "redirects": [
+    {
+      "source": "/acelerador-de-extração-ae",
+      "destination": "/produtos/acelerador-de-extracao-ae",
+      "statusCode": 301
+    },
+    {
+      "source": "/acelerador-de-extra%C3%A7%C3%A3o-ae",
+      "destination": "/produtos/acelerador-de-extracao-ae",
+      "statusCode": 301
+    },
+    {
+      "source": "/acelerador-de-extração-ep",
+      "destination": "/produtos/acelerador-de-extracao-ep",
+      "statusCode": 301
+    },
+    {
+      "source": "/acelerador-de-extra%C3%A7%C3%A3o-ep",
+      "destination": "/produtos/acelerador-de-extracao-ep",
+      "statusCode": 301
+    },
+    {
+      "source": "/acelerador-de-extração-z141",
+      "destination": "/produtos/acelerador-de-extracao-z141",
+      "statusCode": 301
+    },
+    {
+      "source": "/acelerador-de-extra%C3%A7%C3%A3o-z141",
+      "destination": "/produtos/acelerador-de-extracao-z141",
+      "statusCode": 301
+    },
+    {
+      "source": "/aceleradores-de-extração",
+      "destination": "/?linha=aceleradores-de-extracao#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/aceleradores-de-extra%C3%A7%C3%A3o",
+      "destination": "/?linha=aceleradores-de-extracao#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/bucha-do-conjunto-extrator-bex",
+      "destination": "/produtos/bucha-do-conjunto-extrator",
+      "statusCode": 301
+    },
+    {
+      "source": "/bucha-esferica",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/bucha-extratora",
+      "destination": "/produtos/bucha-extratora",
+      "statusCode": 301
+    },
+    {
+      "source": "/bucha-guia-b-bg",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/buchas-e-colunas",
+      "destination": "/?linha=buchas-e-colunas#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/carro-deslizante-kocus-s10",
+      "destination": "/produtos/carro-deslizante-kocus-s10",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/aceleradores-de-extração",
+      "destination": "/?linha=aceleradores-de-extracao#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/aceleradores-de-extra%C3%A7%C3%A3o",
+      "destination": "/?linha=aceleradores-de-extracao#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/all-products",
+      "destination": "/#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/buchas-e-colunas",
+      "destination": "/?linha=buchas-e-colunas#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/centralizadores",
+      "destination": "/?linha=centralizadores#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/componentes",
+      "destination": "/?linha=componentes#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/controladores",
+      "destination": "/?linha=controladores#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/datadores",
+      "destination": "/?linha=datadores#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/molas",
+      "destination": "/?linha=molas#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/pinos-extratores",
+      "destination": "/?linha=pinos-extratores#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/resistências-e-termopares",
+      "destination": "/?linha=resistencias-e-termopares#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/resist%C3%AAncias-e-termopares",
+      "destination": "/?linha=resistencias-e-termopares#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/retentores-de-gaveta",
+      "destination": "/?linha=retentores-de-gaveta#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/travas",
+      "destination": "/?linha=travas#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/válvulas-de-ar",
+      "destination": "/?linha=valvulas-de-ar#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/v%C3%A1lvulas-de-ar",
+      "destination": "/?linha=valvulas-de-ar#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/centralizador-cilindrico",
+      "destination": "/produtos/centralizador-cilindrico",
+      "statusCode": 301
+    },
+    {
+      "source": "/centralizador-frontal",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/centralizador-lateral",
+      "destination": "/produtos/centralizador-lateral",
+      "statusCode": 301
+    },
+    {
+      "source": "/centralizador-lateral-dlm",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/centralizadores",
+      "destination": "/?linha=centralizadores#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/coluna-do-conjunto-extrator-c-cg",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/coluna-do-conjunto-extrator-ce",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/coluna-do-conjunto-extrator-cf-cfg",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/componentes",
+      "destination": "/?linha=componentes#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/controlador-de-temperatura-20z",
+      "destination": "/produtos/controladores",
+      "statusCode": 301
+    },
+    {
+      "source": "/controladores",
+      "destination": "/?linha=controladores#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/datador-para-molde-plástico",
+      "destination": "/produtos/datadores",
+      "statusCode": 301
+    },
+    {
+      "source": "/datador-para-molde-pl%C3%A1stico",
+      "destination": "/produtos/datadores",
+      "statusCode": 301
+    },
+    {
+      "source": "/datadores",
+      "destination": "/?linha=datadores#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/extrator-tipo-c",
+      "destination": "/produtos/pino-extrator-tipo-c",
+      "statusCode": 301
+    },
+    {
+      "source": "/extratores",
+      "destination": "/?linha=pinos-extratores#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/lâmina-extratora",
+      "destination": "/produtos/lamina-extratora",
+      "statusCode": 301
+    },
+    {
+      "source": "/l%C3%A2mina-extratora",
+      "destination": "/produtos/lamina-extratora",
+      "statusCode": 301
+    },
+    {
+      "source": "/mola-de-compressão-amarela",
+      "destination": "/produtos/mola-amarela-carga-extra-pesada",
+      "statusCode": 301
+    },
+    {
+      "source": "/mola-de-compress%C3%A3o-amarela",
+      "destination": "/produtos/mola-amarela-carga-extra-pesada",
+      "statusCode": 301
+    },
+    {
+      "source": "/mola-de-compressão-azul",
+      "destination": "/produtos/mola-azul-carga-media",
+      "statusCode": 301
+    },
+    {
+      "source": "/mola-de-compress%C3%A3o-azul",
+      "destination": "/produtos/mola-azul-carga-media",
+      "statusCode": 301
+    },
+    {
+      "source": "/mola-de-compressão-verde",
+      "destination": "/produtos/mola-verde-carga-leve",
+      "statusCode": 301
+    },
+    {
+      "source": "/mola-de-compress%C3%A3o-verde",
+      "destination": "/produtos/mola-verde-carga-leve",
+      "statusCode": 301
+    },
+    {
+      "source": "/mola-de-compressão-vermelha",
+      "destination": "/produtos/mola-vermelha-carga-pesada",
+      "statusCode": 301
+    },
+    {
+      "source": "/mola-de-compress%C3%A3o-vermelha",
+      "destination": "/produtos/mola-vermelha-carga-pesada",
+      "statusCode": 301
+    },
+    {
+      "source": "/molas-de-compressão",
+      "destination": "/?linha=molas#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/molas-de-compress%C3%A3o",
+      "destination": "/?linha=molas#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/acelerador-de-extração-ep",
+      "destination": "/produtos/acelerador-de-extracao-ep",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/acelerador-de-extra%C3%A7%C3%A3o-ep",
+      "destination": "/produtos/acelerador-de-extracao-ep",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/bucha-do-conjunto-extrator",
+      "destination": "/produtos/bucha-do-conjunto-extrator",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/carro-deslizante-kocus-carro-deslizante-s10",
+      "destination": "/produtos/carro-deslizante-kocus-s10",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/centralizador-lateral",
+      "destination": "/produtos/centralizador-lateral",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/controladores",
+      "destination": "/produtos/controladores",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/datadores",
+      "destination": "/produtos/datadores",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/lâmina-extratora",
+      "destination": "/produtos/lamina-extratora",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/l%C3%A2mina-extratora",
+      "destination": "/produtos/lamina-extratora",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/molas-de-compressão",
+      "destination": "/?linha=molas#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/molas-de-compress%C3%A3o",
+      "destination": "/?linha=molas#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/produto-teste",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/resistências-e-termopares",
+      "destination": "/produtos/resistencia-tubular-flexivel",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/resist%C3%AAncias-e-termopares",
+      "destination": "/produtos/resistencia-tubular-flexivel",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/retentor-de-gaveta-rc",
+      "destination": "/produtos/retentor-de-gaveta-rc",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/trava-de-gaveta-z5130",
+      "destination": "/produtos/trava-de-gaveta-z5130",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/válvula-de-ar-apv",
+      "destination": "/produtos/valvula-de-ar-apv",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/v%C3%A1lvula-de-ar-apv",
+      "destination": "/produtos/valvula-de-ar-apv",
+      "statusCode": 301
+    },
+    {
+      "source": "/produtos",
+      "destination": "/#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/resistência-tubular-flexível",
+      "destination": "/produtos/resistencia-tubular-flexivel",
+      "statusCode": 301
+    },
+    {
+      "source": "/resist%C3%AAncia-tubular-flex%C3%ADvel",
+      "destination": "/produtos/resistencia-tubular-flexivel",
+      "statusCode": 301
+    },
+    {
+      "source": "/resistências-e-termopares",
+      "destination": "/?linha=resistencias-e-termopares#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/resist%C3%AAncias-e-termopares",
+      "destination": "/?linha=resistencias-e-termopares#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/retendor-de-gaveta-rc",
+      "destination": "/produtos/retentor-de-gaveta-rc",
+      "statusCode": 301
+    },
+    {
+      "source": "/retentores-de-gaveta",
+      "destination": "/?linha=retentores-de-gaveta#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/trava-de-gaveta-z5130",
+      "destination": "/produtos/trava-de-gaveta-z5130",
+      "statusCode": 301
+    },
+    {
+      "source": "/trava-de-gaveta-z5134",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/travas",
+      "destination": "/?linha=travas#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/válvula-de-ar-apv",
+      "destination": "/produtos/valvula-de-ar-apv",
+      "statusCode": 301
+    },
+    {
+      "source": "/v%C3%A1lvula-de-ar-apv",
+      "destination": "/produtos/valvula-de-ar-apv",
+      "statusCode": 301
+    },
+    {
+      "source": "/válvulas-de-ar",
+      "destination": "/?linha=valvulas-de-ar#produtos",
+      "statusCode": 301
+    },
+    {
+      "source": "/v%C3%A1lvulas-de-ar",
+      "destination": "/?linha=valvulas-de-ar#produtos",
+      "statusCode": 301
+    }
+  ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
