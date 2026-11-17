@@ -1090,11 +1090,16 @@ function App() {
           <img src={logo} alt="Compomoldes" />
           <p>Componentes para moldes de injeção com atendimento em Curitiba, Joinville e São Paulo.</p>
         </div>
-        <address>
-          <span><MapPin size={17} /> Rua Napoleão Laureano, 300 - Curitiba/PR</span>
-          <span><Phone size={17} /> (41) 3085-4649</span>
-          <span><Mail size={17} /> vendas@compomoldes.com.br</span>
-        </address>
+        <div className="footer-units">
+          {units.map((unit) => (
+            <address key={unit.city}>
+              <strong>{unit.city}</strong>
+              <span><MapPin size={17} /> {unit.address}</span>
+              <a href={`tel:+55${unit.phone.replace(/\D/g, "")}`}><Phone size={17} /> {unit.phone}</a>
+              <a href={`mailto:${unit.email}`}><Mail size={17} /> {unit.email}</a>
+            </address>
+          ))}
+        </div>
       </footer>
     </main>
   );

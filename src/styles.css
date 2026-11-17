@@ -1080,24 +1080,60 @@ h2 {
 
 .footer {
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) minmax(280px, 460px);
-  gap: 28px;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 2.2fr);
+  gap: 40px;
   padding: 48px max(28px, calc((100vw - 1460px) / 2 + 28px));
   color: #fff;
   background: var(--footer-bg);
 }
 
+.footer-units {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
 .footer address {
   display: grid;
-  gap: 12px;
+  align-content: start;
+  gap: 10px;
   font-style: normal;
 }
 
-.footer address span {
+.footer address strong {
+  font-size: 1.05rem;
+  color: #fff;
+}
+
+.footer address span,
+.footer address a {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.footer address a:hover {
+  color: #fff;
+}
+
+.footer address svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+@media (max-width: 1120px) {
+  .footer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .footer-units {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 1120px) {
